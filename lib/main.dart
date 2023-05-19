@@ -3,32 +3,39 @@ import 'package:get/get.dart';
 import 'package:newapp/controller.dart';
 
 void main() {
-  runApp( MaterialApp(
+  runApp(MaterialApp(
     home: Home(),
   ));
 }
 
 class Home extends StatelessWidget {
-final Controller productController=Get.put(Controller());
+  final Controller productController = Get.put(Controller());
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body:Container(child: 
-      Obx(() {
-        if(productController.isLoading.value){
-          return Center(child: CircularProgressIndicator());
-        }else{
-          return ListView.builder(
-            itemCount: productController.productList.length,
-            itemBuilder: (BuildContext context, int index) {
-              return ListTile(leading: Text(productController.productList[index].id.toString()),
-              title: Text(productController.productList[index].price.toString()),
-              );
-            },
-          );
-        }
-      },
+    return Scaffold(body: Container(
+      child: Obx(
+        () {
+          if (productController.isLoading.value) {
+            return Center(child: CircularProgressIndicator());
+          } else {
+            return ListView.builder(
+              itemCount: productController.productList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return ListTile(
+                  leading:
+                      Text(productController.productList[index].id.toString()),
+                  title: Text(
+                      productController.productList[index].price.toString()),
+                  trailing: Image(
+                      image: NetworkImage(productController
+                          .productList[index].image
+                          .toString())),
+                );
+              },
+            );
+          }
+        },
       ),
     ));
   }
